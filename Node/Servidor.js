@@ -1,33 +1,39 @@
-const http=require('http');
-const url=require('url');
-const fs=require('fs');
+const http = require("http");
+const fs = require("fs");
+const path = require("path");
 
-const servidor=http.createServer( (pedido,respuesta) => {
-  const objetourl = url.parse(pedido.url);
-  let camino=objetourl.pathname;
-  if (camino=='../html/html/landingPage.html')
-    camino='../html/html/landingPage.html';
-  fs.stat(camino, error => {
-    if (!error) {
-      fs.readFile(camino, (error,contenido) => {
-        if (error) {
-          respuesta.writeHead(500, {'Content-Type': 'text/plain'});
-          respuesta.write('Error interno');
-          respuesta.end();					
-        } else {
-          respuesta.writeHead(200, {'Content-Type': 'text/html'});
-          respuesta.write(contenido);
-          respuesta.end();
-        }
-      });
-    } else {
-      respuesta.writeHead(404, {'Content-Type': 'text/html'});
-      respuesta.write('<!doctype html><html><head></head><body>Recurso inexistente</body></html>');		
-      respuesta.end();
+http.createServer((request, response)=> {
+
+           let filePath = request.url;
+    if (filePath == '../') {
+        filePath = __dirname+'../html';
     }
-  });
-});
+    fileExtension= path.extname(filePath);
 
-servidor.listen(8888);
-
-console.log('Servidor web iniciado');
+        fs.readFile(filePath,{encoding:"UTF-8"}, (error,content)=>{
+            fileType = path.extname(filePath);
+            if(!error) {
+                switch (fileType) {
+                    case ".css":
+                        response.writeHead(200, {"Content-Type": "text/css"});
+                        response.write(content);
+                    break;
+                    case ".js":
+                        response.writeHead(200, {"Content-Type": "text/javascript"});
+                        response.write(content);
+                    break;
+                    case ".jpg":
+                    	response.writeHead(200, {"Content-Type": "img/jpg"});
+                    	response.write(content);
+                    default:
+                        response.writeHead(200, {"Content-Type": "text/html"});
+                        response.write(content);
+                }
+                response.end();
+            } else {
+                response.writeHead(404, {"Content-Type": "text/html"});
+                response.write("error file");
+                response.end(error);
+            }
+        })
+    }).listen(8888);
