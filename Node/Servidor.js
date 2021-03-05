@@ -5,8 +5,8 @@ const fs=require('fs');
 const servidor=http.createServer( (pedido,respuesta) => {
   const objetourl = url.parse(pedido.url);
   let camino=objetourl.pathname;
-  if (camino=='static/')
-    camino='static/index.html';
+  if (camino=='../html/html/landingPage.html')
+    camino='../html/html/landingPage.html';
   fs.stat(camino, error => {
     if (!error) {
       fs.readFile(camino, (error,contenido) => {
