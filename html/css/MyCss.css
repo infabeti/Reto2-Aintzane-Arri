@@ -341,25 +341,8 @@ footer {background-color: #111;}
 }
 
 
-/***CONTACTO*******************************************************************************************************/
+/***restaurante*******************************************************************************************************/
+.restaurante1 {background-color: #333;}
+.restaurante2 {background-color: pink;}
 
-.contacto .form-control,
-.cotacto .border-line {
-    background-color: rgba(245, 171, 53, 1);
-    background-image: none;
-    border: 1px solid rgba(245, 171, 53, 1);
-    border-radius: 1px;
-    color: #111;
-    display: block;
-    padding: 6px 12px;
-    transition: border-color 0.5s ease-in-out 0s, box-shadow 0.5s ease-in-out 0s;
-    width: 100%;
-}
-
-@media (min-width: 768px) {
-    .mapa {
-        width: 100%;
-        height: auto;
-    }
-}
 
