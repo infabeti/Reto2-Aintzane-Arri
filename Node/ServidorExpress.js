@@ -14,9 +14,7 @@ app.get('/', (req,res)=>{
 	});
 });
 
-app.get('/carrito.html', (req,res)=>{
-	res.send("respuesta");
-})
+
 
 
 app.listen('3000', function() {
