@@ -1,9 +1,11 @@
+
+
 // ----- LogIn --------------------
 function login(){
-    let user = document.getElementById("#inputUser").value();
-    let pass = document.getElementById("#inputPass").value();
+    let user = document.getElementById("inputUser").value;
+    let pass = document.getElementById("inputPass").value;
  
-    $.getJSON("jsons/login.json", function(json) { 
+    $.getJSON("../jsons/login.json", function(json) { 
      let arrayUsers = json;
  
  
@@ -25,6 +27,8 @@ function login(){
      }
  
      });
+
+     refrescarLogin();
  }
  
  function isLogged(){
@@ -56,3 +60,28 @@ function login(){
     sessionStorage.setItem('registrados', JSON.stringify(arrayRegistrados));
  
 }
+
+//Actualizar
+
+function refrescarLogin(){
+    let loginForm = document.getElementById("loginForm");
+    let logedForm = document.getElementById("loginRealizado");
+    let registerForm = document.getElementById("registerForm");
+
+    if (isLogged()) {
+        loginForm.setAttribute("hidden", true);
+        logedForm.removeAttribute("hidden");
+        registerForm.setAttribute("hidden", true);
+    } else {
+        loginForm.removeAttribute("hidden");
+        logedForm.setAttribute("hidden", true); 
+        registerForm.removeAttribute("hidden");
+    }
+}
+/*
+module.exports = {
+	loin : login,
+    isLogged : isLogged,
+    registrarse : registrarse,
+    refrescarLogin : refrescarLogin
+}*/

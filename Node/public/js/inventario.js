@@ -1,3 +1,5 @@
+
+
 /* ---------  Inicializar valores ---------------------*/
 let totalCarrito=0;
 let productos = [];
@@ -123,9 +125,8 @@ function comprar(){
 // Calculos 
 
 function refrescarCabecera(){
+	if(JSON.parse(sessionStorage.getItem("compra"))!=null){
 	var longitud = JSON.parse(sessionStorage.getItem("compra"));
-
-	if(longitud.length>0){
    document.getElementById('numTotalProductos').innerHTML = longitud.length;}
 }
 
@@ -186,3 +187,15 @@ function recalcularTotales (){
 	itemLi.appendChild(itemSpan);
 	itemLi.appendChild(itemStrong);}
 }
+
+
+/*
+module.exports = {
+	addProduct : addProduct,
+	borrar : borrar,
+	comprar : comprar,
+	refrescarCabecera : refrescarCabecera,
+	refrescarCarrito : refrescarCarrito,
+	recalcularTotales : recalcularTotales,
+	crearCesta : crearCesta
+}*/
