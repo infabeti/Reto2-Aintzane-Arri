@@ -46,8 +46,6 @@ a:hover {
         font-size: 3rem;
     }
 }
-
-
 /*****HEADER,FOOTER*************************************************************************************************/
 header {background-color: orange;}
 
@@ -134,7 +132,7 @@ footer {background-color: #111;}
 
 /*****Productos***********************************************************************************************************/
 
-.producto {
+/*.producto {
     transition: all .5s ease-in-out;
     -ms-transition: all .5s ease-in-out;
     -o-transition: all .5s ease-in-out;
@@ -144,14 +142,19 @@ footer {background-color: #111;}
 
 .producto:hover {
     transform: scale(1.2);
-}
+}*/
 
 .carrito {
     display: block;
     background-color: 111;
 }
 
-
+.contadorCarrito {
+	background-color: rgba(253, 227, 167, 1);
+    border-radius: 50%;
+    font-size: 14px;
+    padding: 0px 6px;
+}
 /****Producto********************************************************************************************************/
 
 .fondoTexto {
@@ -344,5 +347,5 @@ footer {background-color: #111;}
 /***restaurante*******************************************************************************************************/
 .restaurante1 {background-color: #333;}
 .restaurante2 {background-color: pink;}
-
-
+.restaurante2i {width: 100%;
+opacity: 60%;}
