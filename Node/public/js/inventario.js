@@ -91,15 +91,15 @@ let tortilla = new Object({
 	  
 	if (product.cantidad>0){
 
-		if(sessionStorage.getItem('compra')==undefined){
-			sessionStorage.setItem('compra', JSON.stringify(new Array()));
+		if(localStorage.getItem('compra')==undefined){
+			localStorage.setItem('compra', JSON.stringify(new Array()));
 		}
 
 		product.cantidad--;
 		
-		let arrayCompras=JSON.parse(sessionStorage.getItem('compra'));
+		let arrayCompras=JSON.parse(localStorage.getItem('compra'));
 		arrayCompras.push(product);
-		sessionStorage.setItem('compra', JSON.stringify(arrayCompras));		
+		localStorage.setItem('compra', JSON.stringify(arrayCompras));		
 
 		totalCarrito = totalCarrito + product.precio; 
 
@@ -112,80 +112,39 @@ let tortilla = new Object({
 }
 
 function borrar (){
-	sessionStorage.clear();
+	localStorage.clear();
 	refrescarCarrito();
 }
 
 function comprar(){
-	//if(){ //Hay que comprobar que el ususario esta logeado
-	alert("¡Compra realizada con éxito!");
-	borrar();}
+	if(estaLogged()){
+		alert("¡Compra realizada con éxito!");
+		borrar();
+	}else {
+			alert("Debes iniciar sesión para realizar la compra");
+	}
 
+}
 
 // Calculos 
 
 function refrescarCabecera(){
-	if(JSON.parse(sessionStorage.getItem("compra"))!=null){
-	var longitud = JSON.parse(sessionStorage.getItem("compra"));
+	if(JSON.parse(localStorage.getItem("compra"))!=null){
+	var longitud = JSON.parse(localStorage.getItem("compra"));
    document.getElementById('numTotalProductos').innerHTML = longitud.length;}
 }
 
-function refrescarCarrito (){
-   refrescarCabecera ();
-   crearCesta();
-	if(JSON.parse(sessionStorage.getItem("compra"))!=null){
-  		 document.getElementById('precioTotalProductos').innerHTML = sessionStorage.getItem('monto');
-	}else {
-		document.getElementById('precioTotalProductos').innerHTML = 0;
-	}
-}
 
 function recalcularTotales (){
-	sessionStorage.setItem('monto', totalCarrito);
+	localStorage.setItem('monto', totalCarrito);
 
 }
-
-/* Mostrar en cesta producto ---------------------------------------------------------- */
-  function crearCesta() {
-	var element = document.getElementById("listaCesta");
-
-	var items = JSON.parse(sessionStorage.getItem("compra"));
-	if (items!=undefined){
-	for (var i = 0; i < items.length; i++) {
-		var itemLi = document.createElement("li");
-		itemLi.className = "list-group-item d-flex justify-content-between lh-condensed";
-		var itemDiv = document.createElement("div");
-		var itemH6 = document.createElement("h6");
-		itemH6.className = "my-0";
-		var itemH6Text = document.createTextNode(items[i].nombre);
-		itemH6.appendChild(itemH6Text);
-		var itemSmall = document.createElement("small");
-		itemSmall.className = "text-muted";
-		var itemH6SmallText = document.createTextNode(items[i].desc);
-		itemSmall.appendChild(itemH6SmallText);
-		var itemSpan = document.createElement("span");
-		itemSpan.className = "text-muted";
-		var itemSpanText = document.createTextNode(items[i].precio);
-		itemSpan.appendChild(itemSpanText);
-		
-		element.appendChild(itemLi);
-		itemLi.appendChild(itemDiv);
-		itemLi.appendChild(itemSpan);
-		itemDiv.appendChild(itemH6);
-		itemDiv.appendChild(itemSmall);
+function estaLogged(){
+	if (localStorage.getItem('usuario')==undefined){
+		return false;
+	}else {
+		return true;
 	}
-	var itemLi = document.createElement("li");
-	itemLi.className = "list-group-item d-flex justify-content-between";
-	var itemSpan = document.createElement("span");
-	var itemSpanText = document.createTextNode('Total');
-	itemSpan.appendChild(itemSpanText);
-	var itemStrong = document.createElement("strong");
-	var itemStrongText = document.createTextNode(JSON.parse(sessionStorage.getItem("monto")));
-	itemStrong.appendChild(itemStrongText);
-		
-	element.appendChild(itemLi);
-	itemLi.appendChild(itemSpan);
-	itemLi.appendChild(itemStrong);}
 }
 
 

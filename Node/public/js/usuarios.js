@@ -1,5 +1,3 @@
-
-
 // ----- LogIn --------------------
 function login(){
     let user = document.getElementById("inputUser").value;
@@ -7,20 +5,20 @@ function login(){
  
     $.getJSON("../jsons/login.json", function(json) { 
      let arrayUsers = json;
- 
+     console.log(JSON.stringify(arrayUsers));
  
     for (let i = 0; i<arrayUsers.length; i++){
      if(arrayUsers[i].nombre===user && arrayUsers[i].pass===pass){
-         sessionStorage.setItem('usuario', JSON.stringify(arrayUsers[i]));
+         localStorage.setItem('usuario', JSON.stringify(arrayUsers[i]));
          console.log("Usuario logeado");
       }
       }
  
      if(!isLogged()){
-         let arrayRegistrados=JSON.parse(sessionStorage.getItem('registrados'));
+         let arrayRegistrados=JSON.parse(localStorage.getItem('registrados'));
          for (let i = 0; i<arrayRegistrados.length; i++){
              if(arrayRegistrados[i].nombre===user && arrayRegistrados[i].pass===pass){
-                 sessionStorage.setItem('usuario', JSON.stringify(arrayRegistrados[i]));
+                 localStorage.setItem('usuario', JSON.stringify(arrayRegistrados[i]));
                  console.log("Usuario logeado");
               }
               }
@@ -32,11 +30,17 @@ function login(){
  }
  
  function isLogged(){
-     if (sessionStorage.getItem('usuario')==undefined){
+     if (localStorage.getItem('usuario')==undefined){
          return false;
      }else {
          return true;
      }
+ }
+
+ // ----- LogIn --------------------
+ function logout(){
+    localStorage.clear();
+    refrescarLogin();
  }
 
  // Register
@@ -45,11 +49,11 @@ function login(){
     let name = $("#inputUser").val();
     let pass = $("#inputPass").val();
 
-    if(sessionStorage.getItem('registrados')==undefined){
-        sessionStorage.setItem('registrados', JSON.stringify(new Array()));
+    if(localStorage.getItem('registrados')==undefined){
+        localStorage.setItem('registrados', JSON.stringify(new Array()));
     }
 
-    let arrayRegistrados=JSON.parse(sessionStorage.getItem('registrados'));
+    let arrayRegistrados=JSON.parse(localStorage.getItem('registrados'));
 
     let user = new Object();
     user.nombre = name;
@@ -57,8 +61,8 @@ function login(){
 
     arrayRegistrados.push(user);
 
-    sessionStorage.setItem('registrados', JSON.stringify(arrayRegistrados));
- 
+    localStorage.setItem('registrados', JSON.stringify(arrayRegistrados));
+    alert("Usuario registrado");
 }
 
 //Actualizar
@@ -67,15 +71,30 @@ function refrescarLogin(){
     let loginForm = document.getElementById("loginForm");
     let logedForm = document.getElementById("loginRealizado");
     let registerForm = document.getElementById("registerForm");
+    let botonRegistrarse = document.getElementById("botonRegistrarse");
 
     if (isLogged()) {
-        loginForm.setAttribute("hidden", true);
-        logedForm.removeAttribute("hidden");
-        registerForm.setAttribute("hidden", true);
+        ocultarAtributo(loginForm);
+        mostrarAtributo(logedForm);
+        document.getElementById("botonLogIn").innerHTML="Cerrar Sesión";
+        ocultarAtributo(botonRegistrarse);
+        ocultarAtributo(registerForm);
     } else {
-        loginForm.removeAttribute("hidden");
-        logedForm.setAttribute("hidden", true); 
-        registerForm.removeAttribute("hidden");
+        mostrarAtributo(loginForm);
+        ocultarAtributo(logedForm);
+        document.getElementById("botonLogIn").innerHTML="Iniciar Sesión";
+        mostrarAtributo(registerForm);
+    }
+}
+
+function ocultarAtributo(ide){
+    if(ide){
+        ide.setAttribute("hidden",true);
+    }
+}
+function mostrarAtributo(ide){
+    if(ide){
+        ide.removeAttribute("hidden");
     }
 }
 /*
