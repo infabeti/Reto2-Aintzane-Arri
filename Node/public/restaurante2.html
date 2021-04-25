@@ -22,6 +22,9 @@
 <!-- My JS -->
 <script src="js/inventario.js"></script>
 <script src="js/usuarios.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+<script src="js/mapas.js"></script>
+
 </head>
 
 <body class="restaurante2">
@@ -73,6 +76,9 @@
       <h2 class="poiret restaurante2"><b>Marmitako</b></h2>
       <p class="card-text"><u>Direccion</u></p>
       <p > calle Lehendakari Aguirre, 85 </p>
+      <div id='map'> </div>
+        <p>La distancia desde su localización hasta el restaurante es de:  <span id="distancia2"></span> km.</p>
+      
     </div>
     <div class="card-deck">
       <div class="card producto">
@@ -158,9 +164,17 @@
   integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
-  <script>
+  <!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+  <script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAGnERHKf5bVwS1LxdWRBnRo-pT1LPjixo&region=ES&language=es&callback=initMap&libraries=&v=weekly"
+  async
+></script>
+
+ 
+ <script>
     refrescarCabecera();
-    refrescarLogin()
+    refrescarLogin();
+    escribirDistancia2();
   </script>
 </script>
 </body>
